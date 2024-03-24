@@ -36,15 +36,13 @@ public class User implements UserDetails {
     private String email;
 
     @NotBlank
-    @Size(max = 20)
+    @Size(max = 50)
     private String name;
 
 //    private String companyId;
 //    private String branchId;
 
     private String hash;
-
-    private String salt;
 
     private String token;
 
