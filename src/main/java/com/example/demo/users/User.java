@@ -1,4 +1,4 @@
-package com.example.demo.user;
+package com.example.demo.users;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;

@@ -1,8 +1,7 @@
 package com.example.demo.config;
 
 import com.example.demo.auditing.ApplicationAuditAware;
-import com.example.demo.user.UserRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
+import com.example.demo.users.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +28,7 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider() {
+    public AuthenticationProvider authenticLogoutHandlerationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService());
         authProvider.setPasswordEncoder(passwordEncoder());
@@ -43,6 +42,7 @@ public class ApplicationConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        System.out.println("vsfsfsdfs");
         return config.getAuthenticationManager();
     }
 

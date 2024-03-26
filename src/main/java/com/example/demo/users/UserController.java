@@ -1,4 +1,4 @@
-package com.example.demo.user;
+package com.example.demo.users;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -20,6 +20,7 @@ public class UserController {
             @RequestBody ChangePasswordRequest request,
             Principal connectedUser
     ) {
+        System.out.println("abc" + request);
         service.changePassword(request, connectedUser);
         return ResponseEntity.ok().build();
     }

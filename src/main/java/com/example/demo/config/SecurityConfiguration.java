@@ -8,20 +8,19 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.logout.LogoutHandler;
+//import org.springframework.security.web.authentication.logout.LogoutHandler;
 
-import static com.example.demo.user.Permission.ADMIN_CREATE;
-import static com.example.demo.user.Permission.ADMIN_DELETE;
-import static com.example.demo.user.Permission.ADMIN_READ;
-import static com.example.demo.user.Permission.ADMIN_UPDATE;
-import static com.example.demo.user.Permission.MANAGER_CREATE;
-import static com.example.demo.user.Permission.MANAGER_DELETE;
-import static com.example.demo.user.Permission.MANAGER_READ;
-import static com.example.demo.user.Permission.MANAGER_UPDATE;
-import static com.example.demo.user.Role.ADMIN;
-import static com.example.demo.user.Role.MANAGER;
+import static com.example.demo.users.Permission.ADMIN_CREATE;
+import static com.example.demo.users.Permission.ADMIN_DELETE;
+import static com.example.demo.users.Permission.ADMIN_READ;
+import static com.example.demo.users.Permission.ADMIN_UPDATE;
+import static com.example.demo.users.Permission.MANAGER_CREATE;
+import static com.example.demo.users.Permission.MANAGER_DELETE;
+import static com.example.demo.users.Permission.MANAGER_READ;
+import static com.example.demo.users.Permission.MANAGER_UPDATE;
+import static com.example.demo.users.Role.ADMIN;
+import static com.example.demo.users.Role.MANAGER;
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
@@ -48,7 +47,7 @@ public class SecurityConfiguration {
             "/swagger-ui.html"};
 //    private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
-    private final LogoutHandler logoutHandler;
+//    private final LogoutHandler logoutHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -69,9 +68,10 @@ public class SecurityConfiguration {
                 .authenticationProvider(authenticationProvider)
 //                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout(logout ->
-                        logout.logoutUrl("/api/auth/logout")
-                                .addLogoutHandler(logoutHandler)
-                                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
+                        logout.logoutUrl("/api/logout")
+                                .logoutSuccessUrl("/")
+//                                .addLogoutHandler(logoutHandler)
+//                                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
                 )
         ;
 

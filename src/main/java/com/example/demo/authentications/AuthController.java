@@ -1,8 +1,9 @@
-package com.example.demo.auth;
+package com.example.demo.authentications;
 
-import com.example.demo.auth.dto.AuthRequest;
-import com.example.demo.auth.dto.AuthResponse;
-import com.example.demo.auth.dto.RegisterRequest;
+import com.example.demo.authentications.dto.request.UserLoginDto;
+import com.example.demo.authentications.dto.response.AuthResponse;
+import com.example.demo.authentications.dto.RegisterRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,12 +23,14 @@ public class AuthController {
     public ResponseEntity<AuthResponse> register(
             @RequestBody RegisterRequest request
     ) {
+        System.out.println("abcxxx" + request);
         return ResponseEntity.ok(authService.createUser(request));
     }
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> authenticate(
-            @RequestBody AuthRequest request
+           @Valid @RequestBody UserLoginDto payload
     ) {
-        return ResponseEntity.ok(authService.getAuthenticatedUser(request));
+        System.out.println("abcxxx" + payload);
+        return ResponseEntity.ok(authService.getAuthenticatedUser(payload));
     }
 }

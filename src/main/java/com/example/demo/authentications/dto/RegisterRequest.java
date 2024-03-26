@@ -1,6 +1,6 @@
-package com.example.demo.auth.dto;
+package com.example.demo.authentications.dto;
 
-import com.example.demo.user.Role;
+import com.example.demo.users.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
