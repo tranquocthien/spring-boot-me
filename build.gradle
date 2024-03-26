@@ -36,6 +36,8 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
 
     implementation 'org.postgresql:postgresql:42.7.1'
+
+    implementation 'org.flywaydb:flyway-core:9.22.3'
 }
 
 tasks.named('test') {

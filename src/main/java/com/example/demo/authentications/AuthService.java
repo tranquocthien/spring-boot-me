@@ -1,17 +1,19 @@
-package com.example.demo.auth;
+package com.example.demo.authentications;
 
-import com.example.demo.auth.dto.AuthRequest;
-import com.example.demo.auth.dto.AuthResponse;
-import com.example.demo.auth.dto.RegisterRequest;
+import com.example.demo.authentications.dto.request.UserLoginDto;
+import com.example.demo.authentications.dto.response.AuthResponse;
+import com.example.demo.authentications.dto.RegisterRequest;
 import com.example.demo.config.JwtService;
-import com.example.demo.user.User;
-import com.example.demo.user.UserRepository;
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.users.User;
+import com.example.demo.users.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.security.SecureRandom;
 
 @Service
@@ -23,39 +25,25 @@ public class AuthService {
 
     public AuthResponse createUser(RegisterRequest request) {
         var cryptPassword = generateCryptPassword(request.getPassword());
-        var user = User.builder()
-                .email(request.getEmail())
-                .name(request.getName())
-                .hash(cryptPassword.hash)
-                .salt(cryptPassword.salt)
-                .role(request.getRole())
-                .build();
+        var user = User.builder().email(request.getEmail()).name(request.getName()).hash(cryptPassword.hash).role(request.getRole()).build();
 
         repository.save(user);
 
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
-        return AuthResponse.builder()
-                .accessToken(jwtToken)
-                .refreshToken(refreshToken)
-                .build();
+        return AuthResponse.builder().accessToken(jwtToken).refreshToken(refreshToken).build();
     }
 
-    public AuthResponse getAuthenticatedUser(AuthRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()
-                )
-        );
-        var user = repository.findByEmail(request.getEmail())
-                .orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
-        return AuthResponse.builder()
-                .accessToken(jwtToken)
-                .refreshToken(refreshToken)
-                .build();
+    public AuthResponse getAuthenticatedUser(UserLoginDto request) {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+        var user = repository.findByEmail(request.getEmail());
+        if (user.isEmpty()) {
+            throw new ResourceNotFoundException("error");
+        }
+        User existingUser = user.get();
+        var jwtToken = jwtService.generateToken(existingUser);
+        var refreshToken = jwtService.generateRefreshToken(existingUser);
+        return AuthResponse.builder().accessToken(jwtToken).refreshToken(refreshToken).build();
     }
 
     public static HashAndSalt generateCryptPassword(String password) {
