@@ -1,5 +1,6 @@
-package com.example.demo.users;
+package com.example.demo.database.entities;
 
+import com.example.demo.users.Role;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import jakarta.validation.constraints.Email;
@@ -56,12 +57,12 @@ public class User implements UserDetails {
     private Role role;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false, updatable = false)
+    @Column(name = "created_datetime",nullable = true, updatable = false)
     @CreatedDate
     private Date createdDatetime;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
+    @Column(name = "updated_datetime", nullable = true)
     @LastModifiedDate
     private Date updatedDatetime;
 

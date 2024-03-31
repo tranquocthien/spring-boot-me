@@ -23,7 +23,7 @@ public class AuthController {
     public ResponseEntity<AuthResponse> register(
             @RequestBody RegisterRequest request
     ) {
-        System.out.println("abcxxx" + request);
+        System.out.println("abcxxx-" + request);
         return ResponseEntity.ok(authService.createUser(request));
     }
     @PostMapping("/login")

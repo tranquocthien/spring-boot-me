@@ -1,4 +1,6 @@
 package com.example.demo.users;
+import com.example.demo.database.entities.User;
+import com.example.demo.users.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;

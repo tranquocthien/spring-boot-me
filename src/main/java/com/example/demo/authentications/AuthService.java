@@ -5,8 +5,8 @@ import com.example.demo.authentications.dto.response.AuthResponse;
 import com.example.demo.authentications.dto.RegisterRequest;
 import com.example.demo.config.JwtService;
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.users.User;
-import com.example.demo.users.UserRepository;
+import com.example.demo.database.entities.User;
+import com.example.demo.users.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,10 +25,8 @@ public class AuthService {
 
     public AuthResponse createUser(RegisterRequest request) {
         var cryptPassword = generateCryptPassword(request.getPassword());
-        var user = User.builder().email(request.getEmail()).name(request.getName()).hash(cryptPassword.hash).role(request.getRole()).build();
-
+        var user = User.builder().email(request.getEmail()).name(request.getUsername()).hash(cryptPassword.hash).build();
         repository.save(user);
-
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         return AuthResponse.builder().accessToken(jwtToken).refreshToken(refreshToken).build();
