@@ -3,8 +3,8 @@ package com.example.demo.config;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
+import java.nio.charset.StandardCharsets;
 import io.jsonwebtoken.security.Keys;
-import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +20,7 @@ import javax.crypto.SecretKey;
 public class JwtService {
 
     @Value("${security.jwt.secret-key}")
-    private String secretKey;
+    private String SECRET_KEY;
     @Value("${security.jwt.expiration}")
     private long jwtExpiration;
     @Value("${security.jwt.refresh-token.expiration}")
@@ -53,17 +53,16 @@ public class JwtService {
     }
 
     private String buildToken(
-            Map<String, Object> extraClaims,
+            Map<String, Object> extractClaims,
             UserDetails userDetails,
             long expiration
     ) {
-        return Jwts
-                .builder()
-                .claims(extraClaims)
+        return Jwts.builder()
+                .claims(extractClaims)
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(getSignInKey())
+                .expiration(new Date(System.currentTimeMillis() + jwtExpiration))
+                .signWith(getSignInKey(), Jwts.SIG.HS256)
                 .compact();
     }
 
@@ -89,8 +88,8 @@ public class JwtService {
                 .getPayload();
     }
 
-    private Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+    private SecretKey getSignInKey() {
+        byte[] keyBytes = SECRET_KEY.getBytes(StandardCharsets.UTF_8);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }

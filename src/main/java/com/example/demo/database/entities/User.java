@@ -34,30 +34,32 @@ public class User implements UserDetails {
     @NotBlank
     @Size(max = 50)
     @Email
+    @Column(name = "email")
     private String email;
 
     @NotBlank
     @Size(max = 50)
+    @Column(name = "name")
     private String name;
 
 //    private String companyId;
 //    private String branchId;
 
+    @Column(name = "hash")
     private String hash;
 
-    private String token;
-
-    private String accessToken;
-
+    @Column(name = "invitation_token")
     private String invitationToken;
 
+    @Column(name = "deactivated_datetime")
     private String deactivatedDatetime;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "role")
     private Role role;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_datetime",nullable = true, updatable = false)
+    @Column(name = "created_datetime", nullable = true, updatable = false)
     @CreatedDate
     private Date createdDatetime;
 
@@ -71,6 +73,15 @@ public class User implements UserDetails {
         return role.getAuthorities();
     }
 
+    @PrePersist
+    protected void onCreate() {
+        createdDatetime = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        createdDatetime = new Date();
+    }
 
     @Override
     public String getPassword() {
