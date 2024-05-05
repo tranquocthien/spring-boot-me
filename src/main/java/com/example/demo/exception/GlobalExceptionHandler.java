@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice // listen for exceptions thrown from all controller classes
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler({MethodArgumentNotValidException.class})
     @ResponseBody
     public ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
         String errorMessage = ex.getBindingResult().getFieldErrors().stream()
@@ -21,5 +21,13 @@ public class GlobalExceptionHandler {
 
         ErrorResponse errorResponse = new ErrorResponse(errorMessage);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ExceptionHandler({RuntimeException.class})
+    public ResponseEntity<Object> handleRuntimeException(RuntimeException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(errorResponse);
     }
 }
