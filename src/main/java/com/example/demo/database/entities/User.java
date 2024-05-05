@@ -27,14 +27,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
-
     @Id
     @GeneratedValue
     private Integer id;
+
     @NotBlank
     @Size(max = 50)
     @Email
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @NotBlank
@@ -42,21 +42,21 @@ public class User implements UserDetails {
     @Column(name = "name")
     private String name;
 
-//    private String companyId;
-//    private String branchId;
+    @Column(unique = true)
+    private String phone;
 
     @Column(name = "hash")
     private String hash;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private Role role;
 
     @Column(name = "invitation_token")
     private String invitationToken;
 
     @Column(name = "deactivated_datetime")
     private String deactivatedDatetime;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role")
-    private Role role;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_datetime", nullable = true, updatable = false)
