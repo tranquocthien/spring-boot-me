@@ -14,13 +14,17 @@ import lombok.Setter;
 public class Ward {
     @Id
     private int id;
+
     private String name;
+
     private String prefix;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id")
+
     private City city;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "district_id")
+
     private District district;
 
     public Ward() {

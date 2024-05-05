@@ -18,7 +18,7 @@ public class City {
     private int id;
     private String name;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "city", fetch = FetchType.EAGER)
-    List<District> districs;
+    List<District> district;
 
     public City() {
         super();

@@ -24,10 +24,13 @@ public class Category implements Serializable {
 
     @Column
     private String name;
+
     @Column
     private String description;
+
     @Column
     private String photo;
+
     @OneToMany(cascade=CascadeType.ALL, mappedBy="category",fetch = FetchType.EAGER)
     private List<SubCategory> subcategories;
 

@@ -18,12 +18,16 @@ import lombok.Setter;
 public class District {
     @Id
     private int id;
+
     private String name;
+
     private String prefix;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id")
     private City city;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "distric", fetch = FetchType.EAGER)
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "district", fetch = FetchType.EAGER)
     List<Ward> wards;
 
 
