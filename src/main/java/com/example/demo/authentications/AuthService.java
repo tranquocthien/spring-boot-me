@@ -6,7 +6,7 @@ import com.example.demo.authentications.dto.RegisterRequest;
 import com.example.demo.config.JwtService;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.database.entities.User;
-import com.example.demo.users.repositories.UserRepository;
+import com.example.demo.user.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

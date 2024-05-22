@@ -1,7 +1,7 @@
 package com.example.demo.config;
 
 import com.example.demo.auditing.ApplicationAuditAware;
-import com.example.demo.users.repositories.UserRepository;
+import com.example.demo.user.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

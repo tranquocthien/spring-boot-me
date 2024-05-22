@@ -1,4 +1,4 @@
-package com.example.demo.users;
+package com.example.demo.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;

@@ -1,6 +1,6 @@
 package com.example.demo.database.entities;
 
-import com.example.demo.users.Role;
+import com.example.demo.user.Role;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import jakarta.validation.constraints.Email;
