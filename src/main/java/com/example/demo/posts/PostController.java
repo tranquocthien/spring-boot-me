@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.group4.Heper.FileStorageService;
-import com.group4.Service.AddressService;
+import com.example.demo.address.AddressService;
 import com.group4.Service.CityService;
 import com.group4.Service.PostPhotoService;
 import com.group4.Service.PostService;
