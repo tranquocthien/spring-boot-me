@@ -50,9 +50,4 @@ public class UserService {
         return PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
     }
 
-    protected User getCurentUser(Authentication authentication) {
-        authentication=SecurityContextHolder.getContext().getAuthentication();
-        User user=(User) userService.findByUsername(authentication.getName());
-        return user;
-    }
 }
